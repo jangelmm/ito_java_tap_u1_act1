@@ -64,4 +64,10 @@ public class Alumno{
         this.edad = edad;
     }
 
+    @Override
+    public String toString() {
+        return "Alumno [numero_Control=" + numero_Control + ", nombre=" + nombre + ", apellido_Paterno="
+                + apellido_Paterno + ", apellido_Materno=" + apellido_Materno + ", genero=" + genero + ", edad=" + edad
+                + "]";
+    }
 }
