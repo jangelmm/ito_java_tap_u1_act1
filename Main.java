@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 public class Main {
@@ -36,6 +35,10 @@ public class Main {
                     guardar_Datos();
                 break;
                 case 6:
+                    char confirmacion = JOptionPane.showInputDialog("'S'. Salir y Guardar cambios\n'E'. Salir sin guardar cambios: ").charAt(0);
+                    if(confirmacion == 'S' || confirmacion == 's'){
+                        guardar_Datos();
+                    }
                 break;
                 default:
                         JOptionPane.showMessageDialog(null, "Error opción no válida");
@@ -58,6 +61,7 @@ public class Main {
     public static void imprimir_Alumnos() {
         StringBuilder mensaje = new StringBuilder();
         for (Alumno a : lista_Alumnos) {
+            mensaje.append("N. Control: ").append(a.getNumero_Control()).append("\n");
             mensaje.append("Nombre: ").append(a.getNombre()).append("\n");
             mensaje.append("Apellido Paterno: ").append(a.getApellido_Paterno()).append("\n");
             mensaje.append("Apellido Materno: ").append(a.getApellido_Materno()).append("\n");
@@ -76,7 +80,7 @@ public class Main {
 
         for (String elemento : lista_Texto) {
             String[] datos = elemento.split(","); 
-
+            
             Alumno a = new Alumno(datos[0], datos[1], datos[2], datos[3], datos[4].charAt(0), Integer.parseInt(datos[5]));
             lista_Alumnos.add(a);
         }
@@ -84,18 +88,15 @@ public class Main {
     public static void guardar_Datos() throws IOException{
         ArrayList<String> lista_Texto = new ArrayList<>();
 
-        if(lista_Alumnos.isEmpty()){
-            LocalDateTime fechaYHoraActual = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-            String fechaYHoraFormateada = fechaYHoraActual.format(formatter);
-
-            lista_Texto.add("INFORMACIÓN DE LOS ALUMNOS.......................................");
-            lista_Texto.add("Fecha y Hora de registro: "+fechaYHoraFormateada+".................\n");
-        }
-
         for (Alumno a : lista_Alumnos) {
-            lista_Texto.add(a.getNombre()+","+a.getNombre()+","+a.getApellido_Paterno()+","+a.getApellido_Materno()+","+a.getGenero()+","+a.getEdad());
+            lista_Texto.add(a.getNumero_Control()+","+a.getNombre()+","+a.getApellido_Paterno()+","+a.getApellido_Materno()+","+a.getGenero()+","+a.getEdad());
         }
         Guardar.guardar(lista_Texto, "AlumnosSistemas.txt");
+    }
+    public static String insertar_Fecha(){
+        LocalDateTime fechaYHoraActual = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String fechaYHoraFormateada = fechaYHoraActual.format(formatter);
+        return fechaYHoraFormateada;
     }
 }
