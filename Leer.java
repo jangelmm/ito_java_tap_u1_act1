@@ -3,8 +3,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class LeerTxtYCrearArrayList {
-    public static ArrayList<String> leerTxtYCrearArrayList(String nombreArchivo) throws IOException {
+public class Leer {
+    public static ArrayList<String> leer(String nombreArchivo) throws IOException {
         ArrayList<String> lista = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(nombreArchivo))) {

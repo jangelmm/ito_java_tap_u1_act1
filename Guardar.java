@@ -3,10 +3,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GuardarArrayListEnTxt {
-    public static void guardarEnTxt(ArrayList<String> lista, String nombreArchivo) throws IOException {
+public class Guardar {
+    public static void guardar(ArrayList<String> lista_Alumnos, String nombreArchivo) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nombreArchivo))) {
-            for (String elemento : lista) {
+            for (String elemento : lista_Alumnos) {
                 writer.write(elemento);
                 writer.newLine();  // Agrega una nueva línea después de cada elemento
             }
