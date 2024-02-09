@@ -1,0 +1,5 @@
+22161152,Jesus Angel,Martinez,Mendoza,M,20
+22161038,Hector Fernando,Cruz,Ruiz,O,20
+22161068,Eric,Garcia,Gallegos,M,19
+22161179,Marcos,Nicio,Lopez,O,19
+22161023,Jennifer,Diego,Garcia,F,19
