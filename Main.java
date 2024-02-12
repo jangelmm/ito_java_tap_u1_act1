@@ -111,6 +111,7 @@ public class Main {
             lista_Texto.add(a.getNumero_Control()+","+a.getNombre()+","+a.getApellido_Paterno()+","+a.getApellido_Materno()+","+a.getGenero()+","+a.getEdad());
         }
         Guardar.guardar(lista_Texto, nombre_Archivo);
+        lista_Alumnos.clear();
     }
     public static String insertar_Fecha() {
         LocalDateTime fechaYHoraActual = LocalDateTime.now();
