@@ -7,38 +7,57 @@ import javax.swing.JOptionPane;
 
 public class Main {
     public static ArrayList<Alumno> lista_Alumnos = new ArrayList<>();
-    public static File archivo = new File("AlumnosSistemas.txt");
+    public static String nombre_Archivo;
+    public static File archivo;
 
     public static void main(String[] args) throws IOException {
-        menu();
+        boolean continuar = false;
+        do{
+            JOptionPane.showMessageDialog(null, "BIENVENIDO AL PROGRAMA DE REGISTRO DE ALUMNOS", "Tópicos Avanzados de Programación", 1);
+            char opcion = JOptionPane.showInputDialog("Selecciona una de las siguiente opciones: \n'C'. Crear un archivo nuevo \n'A'. Abrir un archivo existente \nPresione 'Cancel' para salir").charAt(0);
+            if(opcion == 'C'){
+                nombre_Archivo = "AlumnosSistemas"+insertar_Fecha()+".txt";
+                System.out.println(nombre_Archivo);
+                archivo = new File(nombre_Archivo);
+                menu();
+            }
+            if (opcion == 'A') {
+                nombre_Archivo = JOptionPane.showInputDialog("Digite el nombre del Archivo a trabajar: ");
+                archivo = new File(nombre_Archivo);
+
+                if (archivo.exists()) {
+                    menu();
+                } else {
+                    char reiniciar = JOptionPane.showInputDialog(null, "Lo siento el archivo no ha sido encontrado :/ \nQuiere intentarlo nuevamante (Y/n): ", "Tópicos Avanzados de Programación", 2).charAt(0);
+                    if(reiniciar == 'Y' || reiniciar == 'y'){
+                        continuar = true;
+                    }
+                }
+            }
+        }while(continuar);
     }
     public static void menu() throws IOException{
-        JOptionPane.showMessageDialog(null, "BIENVENIDO AL PROGRAMA DE REGISTRO DE ALUMNOS");
         int opcion = 0;
         do{
-            String mensaje = "\tREGISTRO DE ALUMNOS\nMenu:\n1. Insertar un nuevo alumno\n2. Imprimir alumnos \n3. Reiniciar \n4. Leer datos guardados \n5. Guardar  \n6. Salir";
+            String mensaje = "\tREGISTRO DE ALUMNOS\nMenu:\n1. Insertar un nuevo alumno\n2. Leer los datos guardados \n3. Guardar el estado actual de la información \n4. Imprimir los alumnos \n5. Borrar todos los datos  \n6. Salir (Asegurese de guardar los datos antes)";
             opcion = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
             switch (opcion) {
                 case 1:
                     insertar_Alumno();
                 break;
                 case 2:
-                    imprimir_Alumnos();
-                break;
-                case 3:
-                    reiniciar();
-                break;
-                case 4:
                     leer_Datos();
                 break;
-                case 5:
+                case 3:
                     guardar_Datos();
                 break;
+                case 4:
+                    imprimir_Alumnos();
+                break;
+                case 5:
+                    reiniciar();
+                break;
                 case 6:
-                    char confirmacion = JOptionPane.showInputDialog("'S'. Salir y Guardar cambios\n'E'. Salir sin guardar cambios: ").charAt(0);
-                    if(confirmacion == 'S' || confirmacion == 's'){
-                        guardar_Datos();
-                    }
                 break;
                 default:
                         JOptionPane.showMessageDialog(null, "Error opción no válida");
@@ -76,7 +95,7 @@ public class Main {
     }
     public static void leer_Datos() throws IOException{
         ArrayList<String> lista_Texto = new ArrayList<>();
-        lista_Texto = Leer.leer("AlumnosSistemas.txt");
+        lista_Texto = Leer.leer(nombre_Archivo);
 
         for (String elemento : lista_Texto) {
             String[] datos = elemento.split(","); 
@@ -91,11 +110,12 @@ public class Main {
         for (Alumno a : lista_Alumnos) {
             lista_Texto.add(a.getNumero_Control()+","+a.getNombre()+","+a.getApellido_Paterno()+","+a.getApellido_Materno()+","+a.getGenero()+","+a.getEdad());
         }
-        Guardar.guardar(lista_Texto, "AlumnosSistemas.txt");
+        Guardar.guardar(lista_Texto, nombre_Archivo);
+        lista_Alumnos.clear();
     }
-    public static String insertar_Fecha(){
+    public static String insertar_Fecha() {
         LocalDateTime fechaYHoraActual = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy_HH.mm");
         String fechaYHoraFormateada = fechaYHoraActual.format(formatter);
         return fechaYHoraFormateada;
     }
