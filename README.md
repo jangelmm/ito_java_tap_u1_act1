@@ -78,10 +78,9 @@ class Main {
   +insertar_Fecha(): String
 }
 
-Main -- Alumno: <<uses>>
-Main -- Guardar: <<uses>>
-Main -- Leer: <<uses>>
-Main -- Alumno: lista_Alumnos
+Main -- Alumno
+Main -- Guardar
+Main -- Leer
 
 ```
 
